@@ -83,7 +83,11 @@ if [[ -z $OUTFILE ]]; then
   echo "No --output argument given."
   exit 1
 else
-  OUTFILE="$(realpath "$OUTFILE")"
+  if [[ "$(uname)" == "Darwin" ]]; then
+    OUTFILE="$(realpath "$(dirname "$OUTFILE")")/$(basename "$OUTFILE")"
+  else
+    OUTFILE="$(realpath "$OUTFILE")"
+  fi
 fi
 
 # Prompt for confirmation if ${OUTFILE} exists.
